@@ -36,6 +36,7 @@
   }
 
   .dark {
+    /** Love the custom styling!!! */
     --background: 340 100% 25%; /* Darker pink for dark mode */
     --foreground: 210 40% 98%;
 

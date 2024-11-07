@@ -5,6 +5,8 @@ import type { FFmpeg } from "@ffmpeg/ffmpeg";
 
 function App() {
   const [files, setFiles] = useState<File[]>([]);
+  //* How you did this is fine, but if you want to be able to set different output types for different files, you would have to have slightly more complicated state management.
+  //* The approach that I took is to have each file display in its own FileView.tsx component, and then I rendered an array of FileView components from the array of files. Then each component has have its own outputFormat and isLoading state
   const [outputFormat, setOutputFormat] = useState("jpeg"); // Default output format
   const [isLoading, setIsLoading] = useState(false);
   const ffmpegRef = useRef<FFmpeg | null>(null);
@@ -54,7 +56,9 @@ function App() {
       <div>
         {files.map((file) => (
           <div key={file.name} className="my-2 flex items-center space-x-2">
-          <span>{file.name} - {file.size} bytes</span>
+            <span>
+              {file.name} - {file.size} bytes
+            </span>
             <select
               value={outputFormat}
               onChange={(e) => setOutputFormat(e.target.value)}
@@ -69,6 +73,7 @@ function App() {
               disabled={isLoading}
               className="rounded bg-blue-500 px-2 py-1 text-white"
             >
+              {/* //* If you wanted to add a bit more detail, you could also have a third state for "converted" to show once the conversion is complete */}
               {isLoading ? "Converting..." : "Convert"}
             </button>
           </div>
